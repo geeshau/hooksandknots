@@ -8,7 +8,11 @@ import {
 } from "@/data/products";
 import Footer from "./Footer";
 
-export default function GallerySection() {
+interface GallerySectionProps {
+  onNavigate?: (index: number, resetScroll?: boolean) => void;
+}
+
+export default function GallerySection({ onNavigate }: GallerySectionProps) {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const [lightboxCaption, setLightboxCaption] = useState("");
 
@@ -131,7 +135,7 @@ export default function GallerySection() {
         </div>
       </div>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
 
       {/* Lightbox */}
       {lightboxSrc && (

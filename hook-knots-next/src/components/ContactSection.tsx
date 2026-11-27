@@ -3,7 +3,11 @@
 import { useState, FormEvent } from "react";
 import Footer from "./Footer";
 
-export default function ContactSection() {
+interface ContactSectionProps {
+  onNavigate?: (index: number, resetScroll?: boolean) => void;
+}
+
+export default function ContactSection({ onNavigate }: ContactSectionProps) {
   const [status, setStatus] = useState("");
 
   const handleSubmit = (e: FormEvent) => {
@@ -91,7 +95,7 @@ export default function ContactSection() {
         </p>
       </div>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

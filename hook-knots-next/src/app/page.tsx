@@ -29,15 +29,17 @@ export default function Home() {
   const totalSections = SECTION_LABELS.length;
 
   const navigateTo = useCallback(
-    (index: number) => {
+    (index: number, resetScroll = false) => {
       if (isAnimating || index < 0 || index >= totalSections) return;
       setIsAnimating(true);
       setCurrentSection(index);
 
-      // Reset scroll position of the target section
-      const targetSection = sectionRefs.current[index];
-      if (targetSection) {
-        targetSection.scrollTop = 0;
+      // Only reset scroll when explicitly requested (e.g. nav link click)
+      if (resetScroll) {
+        const targetSection = sectionRefs.current[index];
+        if (targetSection) {
+          targetSection.scrollTop = 0;
+        }
       }
 
       setTimeout(() => setIsAnimating(false), 900);
@@ -133,6 +135,11 @@ export default function Home() {
 
   return (
     <>
+      {/* Skip to content link for keyboard users */}
+      <a href="#main-content" className="skip-nav">
+        Skip to content
+      </a>
+
       <Header
         currentSection={currentSection}
         onNavigate={navigateTo}
@@ -146,7 +153,7 @@ export default function Home() {
         onNavigate={navigateTo}
       />
 
-      <div className="horizontal-scroll-wrapper">
+      <main id="main-content" className="horizontal-scroll-wrapper">
         <div
           ref={trackRef}
           className="horizontal-scroll-track"
@@ -159,7 +166,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[0] = el; }}
             className="scroll-section"
           >
-            <HeroSection />
+            <HeroSection onNavigate={navigateTo} />
           </div>
 
           {/* 1 — Shop */}
@@ -167,7 +174,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[1] = el; }}
             className="scroll-section"
           >
-            <ShopSection />
+            <ShopSection onNavigate={navigateTo} />
           </div>
 
           {/* 2 — Editorial */}
@@ -175,7 +182,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[2] = el; }}
             className="scroll-section"
           >
-            <EditorialSection />
+            <EditorialSection onNavigate={navigateTo} />
           </div>
 
           {/* 3 — About */}
@@ -183,7 +190,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[3] = el; }}
             className="scroll-section"
           >
-            <AboutSection />
+            <AboutSection onNavigate={navigateTo} />
           </div>
 
           {/* 4 — Gallery */}
@@ -191,7 +198,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[4] = el; }}
             className="scroll-section"
           >
-            <GallerySection />
+            <GallerySection onNavigate={navigateTo} />
           </div>
 
           {/* 5 — StitchLab */}
@@ -199,7 +206,7 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[5] = el; }}
             className="scroll-section"
           >
-            <StitchLabSection />
+            <StitchLabSection onNavigate={navigateTo} />
           </div>
 
           {/* 6 — Contact */}
@@ -207,19 +214,20 @@ export default function Home() {
             ref={(el) => { sectionRefs.current[6] = el; }}
             className="scroll-section"
           >
-            <ContactSection />
+            <ContactSection onNavigate={navigateTo} />
           </div>
         </div>
-      </div>
+      </main>
 
-      {/* WhatsApp button */}
+      {/* WhatsApp floating button */}
       <a
         className="whatsapp-btn"
         href="https://wa.me/254736953766?text=Hello%20Hook%20%26%20Knots"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Chat with us on WhatsApp"
       >
-        WhatsApp
+        Chat with us
       </a>
     </>
   );

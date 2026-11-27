@@ -4,7 +4,11 @@ import { useState, FormEvent } from "react";
 import { courses } from "@/data/products";
 import Footer from "./Footer";
 
-export default function StitchLabSection() {
+interface StitchLabSectionProps {
+  onNavigate?: (index: number, resetScroll?: boolean) => void;
+}
+
+export default function StitchLabSection({ onNavigate }: StitchLabSectionProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [status, setStatus] = useState("");
@@ -89,7 +93,7 @@ export default function StitchLabSection() {
         </div>
       </div>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
 
       {/* Registration modal */}
       <div

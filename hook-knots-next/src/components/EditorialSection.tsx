@@ -1,6 +1,10 @@
 "use client";
 
-export default function EditorialSection() {
+interface EditorialSectionProps {
+  onNavigate?: (index: number, resetScroll?: boolean) => void;
+}
+
+export default function EditorialSection({ onNavigate }: EditorialSectionProps) {
   return (
     <div className="editorial-section">
       <div className="editorial-image">
@@ -18,7 +22,15 @@ export default function EditorialSection() {
           Pieces created to become part of your identity, your moments
           and your everyday style.
         </p>
-        <span className="cta-button">Discover the collection</span>
+        <span
+          className="cta-button"
+          role="button"
+          tabIndex={0}
+          onClick={() => onNavigate?.(1, true)}
+          onKeyDown={(e) => { if (e.key === 'Enter') onNavigate?.(1, true); }}
+        >
+          Discover the collection
+        </span>
       </div>
     </div>
   );

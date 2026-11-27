@@ -2,7 +2,11 @@
 
 import Footer from "./Footer";
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  onNavigate?: (index: number, resetScroll?: boolean) => void;
+}
+
+export default function AboutSection({ onNavigate }: AboutSectionProps) {
   return (
     <div className="about-section">
       {/* Hero */}
@@ -60,13 +64,19 @@ export default function AboutSection() {
             accessory with enough character to become part of your
             identity.
           </p>
-          <span className="cta-button-dark cta-button">
+          <span
+            className="cta-button-dark cta-button"
+            role="button"
+            tabIndex={0}
+            onClick={() => onNavigate?.(4, true)}
+            onKeyDown={(e) => { if (e.key === 'Enter') onNavigate?.(4, true); }}
+          >
             View the gallery
           </span>
         </div>
       </div>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }
