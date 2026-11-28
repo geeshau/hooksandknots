@@ -272,6 +272,11 @@ h1, h2, h3 {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .mobile-menu nav {
@@ -1391,8 +1396,11 @@ h1, h2, h3 {
   }
 
   .scroll-cue {
-    bottom: 20px;
-    font-size: 8px;
+    display: none;
+  }
+
+  .hero-content {
+    padding-bottom: clamp(80px, 14vh, 130px);
   }
 
   .whatsapp-btn {
